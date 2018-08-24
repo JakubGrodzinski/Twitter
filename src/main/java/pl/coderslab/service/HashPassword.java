@@ -10,4 +10,10 @@ public class HashPassword
     {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
+
+    public boolean check (String logging, String inDatabase)
+    {
+        return BCrypt.checkpw(logging, inDatabase);
+    }
+
 }

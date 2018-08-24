@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.coderslab.model.User;
 import pl.coderslab.repository.UserRepository;
 import pl.coderslab.service.EmailSearch;
@@ -15,6 +16,7 @@ import pl.coderslab.service.HashPassword;
 import pl.coderslab.validatorGroups.RegistrationValidation;
 
 @Controller
+@SessionAttributes("loggedUser")
 public class LoginController
 {
     @Autowired
@@ -34,10 +36,29 @@ public class LoginController
         return "login";
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String logInUser(@ModelAttribute User user)
+    public String logInUser(Model model, @Validated({RegistrationValidation.class}) User user, BindingResult bindingResult)
     {
-        return "login";
+        if(bindingResult.hasErrors())
+        {
+            return "login";
+        }
+        else
+        {
+            User user1 = userRepository.getUserByEmail(user.getEmail());
+            if(hashPassword.check(user.getPassword(), user1.getPassword()))
+            {
+                model.addAttribute("loggedUser", user);
+                return "redirect:/main";
+            }
+            else
+            {
+                return "login";
+            }
+        }
+
     }
+
+
     @RequestMapping("/registration")
     public String registerPage (Model model)
     {
@@ -60,6 +81,7 @@ public class LoginController
             }
             else
             {
+                user.setPassword(hashPassword.hash(user.getPassword()));
                 userRepository.save(user);
                 return "redirect:/login";
             }

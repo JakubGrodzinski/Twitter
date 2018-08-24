@@ -14,7 +14,7 @@
 <body>
     <h2>Registration page</h2>
     <%--@elvariable id="user" type="pl.coderslab.model.User"--%>
-    <form:form modelAttribute="user" method="post" action="login">
+    <form:form modelAttribute="user" method="post" action="/registration">
         Email<br/>
         <form:input path="email"/><br/>
         <form:errors path="email"/><br/>

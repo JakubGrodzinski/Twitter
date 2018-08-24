@@ -12,15 +12,17 @@
     <title>Title</title>
 </head>
 <body>
-
+<h2>Log in</h2>
 <%--@elvariable id="user" type="pl.coderslab.model.User"--%>
-<form:form modelAttribute="user" method="post" action="registration">
+<form:form modelAttribute="user" method="post" action="login">
     <form:input path="email"/><br/>
     <form:errors path="email"/><br/>
     <form:password path="password"/><br/>
     <form:errors path="password"/><br/>
     <input type="submit" value="Log in"/>
 </form:form>
+
+<a href="/registration">Sign up</a>
 
 </body>
 </html>

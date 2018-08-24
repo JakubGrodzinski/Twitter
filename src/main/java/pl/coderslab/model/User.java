@@ -1,11 +1,13 @@
 package pl.coderslab.model;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import pl.coderslab.validatorGroups.FullValidation;
 import pl.coderslab.validatorGroups.RegistrationValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,9 +18,11 @@ public class User
     private Long id;
 
     @NotNull(groups = FullValidation.class)
+    @NotBlank(groups = FullValidation.class)
     private String username;
 
     @NotNull(groups = {FullValidation.class, RegistrationValidation.class})
+    @NotBlank(groups = {FullValidation.class, RegistrationValidation.class})
     private String password;
 
     @NotNull(groups = {FullValidation.class})
@@ -26,8 +30,11 @@ public class User
 
     @NotNull(groups = {FullValidation.class, RegistrationValidation.class})
     @Email(groups = {FullValidation.class, RegistrationValidation.class})
+    @NotBlank(groups = {FullValidation.class, RegistrationValidation.class})
     @Column(unique = true)
     private String email;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Tweet> tweets;
 
     public Long getId() {
         return id;
