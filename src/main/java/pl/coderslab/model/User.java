@@ -36,6 +36,9 @@ public class User
     @OneToMany(cascade = CascadeType.ALL)
     private List<Tweet> tweets;
 
+    @OneToMany
+    private List<Comment> comments;
+
     public Long getId() {
         return id;
     }
@@ -74,5 +77,21 @@ public class User
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets = tweets;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

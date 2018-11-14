@@ -45,6 +45,8 @@ public class LoginController
         else
         {
             User user1 = userRepository.getUserByEmail(user.getEmail());
+            if(user1 == null)
+                return "login";
             if(hashPassword.check(user.getPassword(), user1.getPassword()))
             {
                 model.addAttribute("loggedUser", user);

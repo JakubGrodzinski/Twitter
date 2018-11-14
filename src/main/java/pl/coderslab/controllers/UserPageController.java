@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.model.Tweet;
 import pl.coderslab.model.User;
 import pl.coderslab.repository.TweetRepository;
+import pl.coderslab.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -17,17 +18,21 @@ public class UserPageController
     @Autowired
     TweetRepository tweetRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @RequestMapping("/userPage")
     public String showUserPage()
     {
-        //TODO
-        return "fdd";
+        return "user";
     }
 
 
     @ModelAttribute("tweetsByUser")
     public List<Tweet> getTweetsByUser (HttpSession session)
     {
-        return tweetRepository.getCustomTweetsByUser((User)session.getAttribute("loggedUser"));
+        User user = ((User)session.getAttribute("loggedUser"));
+        User user1 = userRepository.getUserByEmail(user.getEmail());
+        return tweetRepository.getCustomTweetsByUser(user1);
     }
 }

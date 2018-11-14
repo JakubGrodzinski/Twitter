@@ -3,26 +3,23 @@ package pl.coderslab.model;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "tweets")
-public class Tweet
+@Table(name = "comments")
+public class Comment
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @ManyToOne()
+    @ManyToOne
     private User user;
-    @Size(max = 160)
-    private String text;
+
+    @ManyToOne
+    private Tweet tweet;
 
     private Date created;
-
-    @OneToMany
-    private List<Comment> comments;
-
+    @Size(max = 60)
+    private String text;
 
     public Long getId() {
         return id;
@@ -40,12 +37,12 @@ public class Tweet
         this.user = user;
     }
 
-    public String getText() {
-        return text;
+    public Tweet getTweet() {
+        return tweet;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTweet(Tweet tweet) {
+        this.tweet = tweet;
     }
 
     public Date getCreated() {
@@ -56,11 +53,11 @@ public class Tweet
         this.created = created;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public String getText() {
+        return text;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setText(String text) {
+        this.text = text;
     }
 }

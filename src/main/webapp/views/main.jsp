@@ -25,6 +25,7 @@
         ${tweetshow.user.email} <br/>
         ${tweetshow.created} <br/>
         ${tweetshow.text}<br/>
+        <a href="/tweet/${tweetshow.id}">Full Tweet</a><br/><br/>
     </c:forEach>
 
 </body>
